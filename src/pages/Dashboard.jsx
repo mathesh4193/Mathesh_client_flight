@@ -33,7 +33,7 @@ const Dashboard = () => {
   const [options, setOptions] = useState({ origins: [], destinations: [] });
   const [loading, setLoading] = useState(false);
 
-  // ✅ Fetch flight options for dropdowns
+  //  Fetch flight options for dropdowns
   useEffect(() => {
     const fetchFlights = async () => {
       try {
@@ -55,7 +55,7 @@ const Dashboard = () => {
     fetchFlights();
   }, []);
 
-  // ✅ Duration calculator
+  //  Duration calculator
   const calculateDuration = (departure, arrival) => {
     try {
       const parseTime = (timeStr) => {
@@ -79,7 +79,7 @@ const Dashboard = () => {
     }
   };
 
-  // ✅ Handle input change
+  //  Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -88,7 +88,7 @@ const Dashboard = () => {
     }));
   };
 
-  // ✅ Handle flight search
+  //  Handle flight search
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);

@@ -76,7 +76,7 @@ const BookingCard = ({ booking, api }) => {
   const navigate = useNavigate();
   const flight = booking.flight || {};
 
-  // 🟢 Stripe Checkout (Pay Now)
+  //  Stripe Checkout (Pay Now)
   const handlePayNow = async () => {
     try {
       const res = await api.post("/payments/checkout", {
@@ -131,7 +131,7 @@ const BookingCard = ({ booking, api }) => {
     }
   };
 
-  // 🟢 View Booking Details
+  //  View Booking Details
   const handleViewDetails = () => {
     navigate(`/bookings/${booking._id}`);
   };

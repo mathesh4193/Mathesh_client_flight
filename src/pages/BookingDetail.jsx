@@ -13,13 +13,13 @@ export default function BookingDetail() {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
 
-  // ✅ Load booking details
+  //  Load booking details
   const load = useCallback(async () => {
     try {
       const { data } = await api.get(`/bookings/${id}`);
       setBooking(data.booking);
     } catch (err) {
-      console.error("❌ Error loading booking:", err);
+      console.error(" Error loading booking:", err);
     } finally {
       setLoading(false);
     }
@@ -29,7 +29,7 @@ export default function BookingDetail() {
     load();
   }, [load]);
 
-  // ✅ Fetch flight status (mock API)
+  //  Fetch flight status (mock API)
   useEffect(() => {
     if (booking?.flight?.flightNumber) {
       fetch(`${API_BASE_URL}/api/flight-status/${booking.flight.flightNumber}`)
@@ -39,7 +39,7 @@ export default function BookingDetail() {
     }
   }, [booking]);
 
-  // ✅ Download PDF
+  //  Download PDF
   const downloadPdf = async () => {
     try {
       setDownloading(true);
@@ -60,26 +60,26 @@ export default function BookingDetail() {
       a.click();
       a.remove();
     } catch (err) {
-      console.error("❌ PDF download error:", err);
+      console.error(" PDF download error:", err);
       alert("Unable to download PDF. Please try again.");
     } finally {
       setDownloading(false);
     }
   };
 
-  // ✅ Verify Payment
+  //  Verify Payment
   const verifyPayment = async () => {
     try {
       const res = await api.get(`/payments/verify/${booking._id}`);
       alert(res.data.message);
       await load();
     } catch (err) {
-      console.error("❌ Payment verification failed:", err);
+      console.error(" Payment verification failed:", err);
       alert("Failed to verify payment. Please try again.");
     }
   };
 
-  // ✅ Cancel Booking
+  //  Cancel Booking
   const cancelBooking = async () => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
     try {
@@ -87,24 +87,24 @@ export default function BookingDetail() {
       await load();
       alert("Booking cancelled successfully.");
     } catch (err) {
-      console.error("❌ Cancel Booking Error:", err);
+      console.error(" Cancel Booking Error:", err);
       alert("Failed to cancel booking.");
     }
   };
 
-  // ✅ Upgrade to Business Class
+  //  Upgrade to Business Class
   const changeToBusiness = async () => {
     try {
       await api.post(`/bookings/${id}/change`, { travelClass: "Business" });
       await load();
       alert("Upgraded to Business class!");
     } catch (err) {
-      console.error("❌ Upgrade Error:", err);
+      console.error(" Upgrade Error:", err);
       alert("Failed to upgrade class.");
     }
   };
 
-  // ✅ Loading / Not Found States
+  //  Loading / Not Found States
   if (loading)
     return (
       <div className="min-h-screen flex flex-col">
@@ -127,10 +127,10 @@ export default function BookingDetail() {
       </div>
     );
 
-  // ✅ Format Date/Time
+  //  Format Date/Time
   const formatDateTime = (dt) => new Date(dt).toLocaleString();
 
-  // ✅ Main Render
+  //  Main Render
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       <Navbar />
