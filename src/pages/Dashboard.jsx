@@ -14,9 +14,6 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "https://mathesh-fligh-server.onrender.com";
-
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -33,15 +30,12 @@ const Dashboard = () => {
   const [options, setOptions] = useState({ origins: [], destinations: [] });
   const [loading, setLoading] = useState(false);
 
-  //  Fetch flight options for dropdowns
+  //  Fetch all flights for dropdown options
   useEffect(() => {
     const fetchFlights = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/flights`);
-        if (!res.ok) throw new Error("Failed to load flights");
-
+        const res = await fetch("https://mathesh-fligh-server.onrender.com/api/flights");
         const data = await res.json();
-        if (!Array.isArray(data)) throw new Error("Invalid flight data");
 
         const origins = [...new Set(data.map((f) => f.origin))];
         const destinations = [...new Set(data.map((f) => f.destination))];
@@ -49,13 +43,12 @@ const Dashboard = () => {
         setOptions({ origins, destinations });
       } catch (err) {
         console.error("Error fetching flights:", err);
-        alert("Failed to load flight data. Check your server or CORS settings.");
       }
     };
     fetchFlights();
   }, []);
 
-  //  Duration calculator
+  //  Function to calculate duration between two times
   const calculateDuration = (departure, arrival) => {
     try {
       const parseTime = (timeStr) => {
@@ -69,7 +62,7 @@ const Dashboard = () => {
       const depMins = parseTime(departure);
       const arrMins = parseTime(arrival);
       let diff = arrMins - depMins;
-      if (diff < 0) diff += 24 * 60;
+      if (diff < 0) diff += 24 * 60; // next-day arrival
 
       const hrs = Math.floor(diff / 60);
       const mins = diff % 60;
@@ -79,7 +72,6 @@ const Dashboard = () => {
     }
   };
 
-  //  Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -88,11 +80,9 @@ const Dashboard = () => {
     }));
   };
 
-  //  Handle flight search
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const params = new URLSearchParams({
         origin: formData.origin,
@@ -100,11 +90,12 @@ const Dashboard = () => {
         date: formData.date,
       });
 
-      const res = await fetch(`${API_BASE_URL}/api/flights/search?${params}`);
+      const res = await fetch(
+        `https://mathesh-fligh-server.onrender.com/api/flights/search?${params}`
+      );
       if (!res.ok) throw new Error("Failed to fetch flights");
 
       const data = await res.json();
-      if (!Array.isArray(data)) throw new Error("Invalid flight data");
 
       const classMultiplier = {
         Economy: 1,
@@ -113,15 +104,14 @@ const Dashboard = () => {
       };
 
       const updatedFlights = data.map((f) => {
-        const total =
-          f.price * formData.passengers * classMultiplier[formData.travelClass];
+        const total = f.price * formData.passengers * classMultiplier[formData.travelClass];
         const duration = calculateDuration(f.departureTime, f.arrivalTime);
         return { ...f, total, duration };
       });
 
       setFlights(updatedFlights);
     } catch (err) {
-      console.error("Search Error:", err);
+      console.error(" Search Error:", err);
       alert("Failed to fetch flights. Please try again later.");
     } finally {
       setLoading(false);
@@ -145,7 +135,7 @@ const Dashboard = () => {
         </p>
       </header>
 
-      {/* Search Section */}
+      {/* Flight Search */}
       <main className="flex-1 p-8">
         <section className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl max-w-5xl mx-auto border border-white/20 p-8 mb-8">
           <form
@@ -237,7 +227,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Travel Class */}
+            {/* Class */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Travel Class
@@ -307,7 +297,8 @@ const Dashboard = () => {
                 </div>
 
                 <button
-                  onClick={() =>
+                 
+                 onClick={() =>
                     navigate(`/book/${flight._id}`, {
                       state: {
                         ...flight,
