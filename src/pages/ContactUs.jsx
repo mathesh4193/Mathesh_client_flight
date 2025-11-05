@@ -46,11 +46,11 @@ const ContactUs = () => {
                 </p>
                 <p className="flex items-center gap-3">
                   <Phone className="text-green-600 w-5 h-5" />
-                  +1 (800) 555-1234
+                  +91 9876543210
                 </p>
                 <p className="flex items-center gap-3">
                   <MapPin className="text-red-600 w-5 h-5" />
-                  123 Skyway Blvd, New York, USA
+                  123 main st, Madurai, Tamil Nadu, India
                 </p>
               </div>
             </div>
