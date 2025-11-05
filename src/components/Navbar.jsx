@@ -37,7 +37,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* ✅ Mobile Dropdown Menu */}
+      {/*  Mobile Dropdown Menu */}
       {menuOpen && (
         <div className="md:hidden bg-indigo-700/95 backdrop-blur-md shadow-inner absolute top-full left-0 w-full z-50">
           <div className="flex flex-col items-center gap-4 py-4 text-base">

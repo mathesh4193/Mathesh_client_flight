@@ -66,7 +66,7 @@ const ContactUs = () => {
 
               {submitted && (
                 <div className="bg-green-100 border border-green-400 text-green-700 p-3 rounded mb-4">
-                  ✅ Your message has been sent successfully!
+                   Your message has been sent successfully!
                 </div>
               )}
 

@@ -13,10 +13,10 @@ import {
 import { TrendingUp, BarChart3, LineChart, Plane } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useAuth } from "../contexts/AuthContext"; // ✅ import
+import { useAuth } from "../contexts/AuthContext"; //  import
 
 export default function ReportsAnalytics() {
-  const { user, api } = useAuth(); // ✅ use Auth context
+  const { user, api } = useAuth(); //  use Auth context
   const [summary, setSummary] = useState(null);
   const [routeData, setRouteData] = useState([]);
   const [monthlyData, setMonthlyData] = useState([]);
@@ -28,7 +28,7 @@ export default function ReportsAnalytics() {
 
     (async () => {
       try {
-        // ✅ Authenticated request
+        //  Authenticated request
         const { data } = await api.get("/reports/summary");
 
         setSummary({
@@ -47,7 +47,7 @@ export default function ReportsAnalytics() {
         );
         setClassData(data.classDistribution || []);
       } catch (err) {
-        console.error("❌ Error fetching reports:", err);
+        console.error(" Error fetching reports:", err);
       } finally {
         setLoading(false);
       }
@@ -73,7 +73,7 @@ export default function ReportsAnalytics() {
             My Flight Reports & Analytics
           </h1>
 
-          {/* ✅ Summary Cards */}
+          {/*  Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
             <SummaryCard
               icon={<TrendingUp className="w-6 h-6 text-blue-600" />}
@@ -97,7 +97,7 @@ export default function ReportsAnalytics() {
             />
           </div>
 
-          {/* ✅ Charts */}
+          {/*  Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <ChartCard title="My Monthly Booking Trends" color="blue">
               <ResponsiveContainer width="100%" height={250}>
@@ -157,7 +157,7 @@ export default function ReportsAnalytics() {
   );
 }
 
-/* ✅ Summary Card */
+/*  Summary Card */
 const SummaryCard = ({ icon, label, value }) => (
   <div className="bg-white border rounded-2xl p-4 shadow hover:shadow-lg transition">
     <div className="flex items-center gap-3">
@@ -170,7 +170,7 @@ const SummaryCard = ({ icon, label, value }) => (
   </div>
 );
 
-/* ✅ Chart Card */
+/*  Chart Card */
 const ChartCard = ({ title, color, children, className }) => {
   const colorMap = {
     blue: "bg-blue-50 text-blue-700",

@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Flights from "./pages/Flights";
 import BookFlight from "./pages/BookFlight";
 import Bookings from "./pages/Bookings";
-import BookingDetail from "./pages/BookingDetail"; // ✅ Add this
+import BookingDetail from "./pages/BookingDetail"; //  Add this
 import Support from "./pages/Support";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -22,7 +22,7 @@ export default function App() {
       <Route path="/book/:id" element={<BookFlight />} />
       <Route path="/bookings" element={<Bookings />} />
 
-      {/* ✅ New Dynamic Booking Detail Route */}
+      {/*  New Dynamic Booking Detail Route */}
       <Route path="/bookings/:id" element={<BookingDetail />} />
 
       <Route path="/support" element={<Support />} />

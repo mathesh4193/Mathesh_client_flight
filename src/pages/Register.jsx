@@ -136,7 +136,7 @@ const Register = () => {
             value={form.password}
             onChange={handleChange}
             required
-            autoComplete="new-password" // ✅ added
+            autoComplete="new-password" //  added
             minLength={4}
             className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400"
           />
@@ -149,7 +149,7 @@ const Register = () => {
             value={form.confirmPassword}
             onChange={handleChange}
             required
-            autoComplete="new-password" // ✅ added
+            autoComplete="new-password" //  added
             minLength={4}
             className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400"
           />

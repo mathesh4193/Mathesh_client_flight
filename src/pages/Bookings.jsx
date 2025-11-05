@@ -13,7 +13,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-// ✅ Initialize Stripe safely
+//  Initialize Stripe safely
 const STRIPE_KEY = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 let stripePromise = null;
 if (STRIPE_KEY && STRIPE_KEY.startsWith("pk_")) {
@@ -27,14 +27,14 @@ export default function Bookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch user bookings
+  //  Fetch user bookings
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const res = await api.get("/bookings/me", { cache: "no-store" });
         setBookings(res.data.bookings || []);
       } catch (err) {
-        console.error("❌ Error fetching bookings:", err);
+        console.error(" Error fetching bookings:", err);
       } finally {
         setLoading(false);
       }
@@ -79,7 +79,7 @@ export default function Bookings() {
   );
 }
 
-/* ✅ Booking Card Component */
+/*  Booking Card Component */
 const BookingCard = ({ booking, api }) => {
   const navigate = useNavigate();
   const flight = booking.flight || {};
@@ -95,7 +95,7 @@ const BookingCard = ({ booking, api }) => {
       const { url } = res.data;
       if (url) window.location.href = url;
     } catch (err) {
-      console.error("❌ Payment error:", err);
+      console.error(" Payment error:", err);
       alert("Failed to start payment process.");
     }
   };
@@ -121,7 +121,7 @@ const BookingCard = ({ booking, api }) => {
       link.click();
       document.body.removeChild(link);
     } catch (err) {
-      console.error("❌ PDF Download Error:", err);
+      console.error(" PDF Download Error:", err);
       alert("Unable to download itinerary.");
     }
   };
@@ -134,7 +134,7 @@ const BookingCard = ({ booking, api }) => {
       alert("Booking cancelled successfully.");
       window.location.reload();
     } catch (err) {
-      console.error("❌ Cancel Booking Error:", err);
+      console.error(" Cancel Booking Error:", err);
       alert("Failed to cancel booking.");
     }
   };

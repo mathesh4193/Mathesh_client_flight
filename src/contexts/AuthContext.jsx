@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       const { data } = await api.post("/auth/register", payload);
       localStorage.setItem("token", data.token);
       setUser(data.user);
-      alert("✅ Registration successful!");
+      alert(" Registration successful!");
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed.");
     }
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.put("/user/me", profile);
       setUser(data.user);
-      alert("✅ Profile updated successfully!");
+      alert(" Profile updated successfully!");
     } catch {
       alert("Failed to update profile.");
     }

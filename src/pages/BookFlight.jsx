@@ -13,7 +13,7 @@ export default function BookFlight() {
 
   const passengerCount = Number(flight?.passengers || 1);
 
-  // ✅ Initialize passengers based on flight.passengers count
+  //  Initialize passengers based on flight.passengers count
   const [passengers, setPassengers] = useState(
     Array.from({ length: passengerCount }, () => ({
       firstName: "",
@@ -28,20 +28,20 @@ export default function BookFlight() {
   const [loading, setLoading] = useState(false);
   const [totalFare, setTotalFare] = useState(0);
 
-  // ✅ Calculate total fare dynamically
+  //  Calculate total fare dynamically
   useEffect(() => {
     const basePrice = flight?.totalPrice || flight?.price || 0;
     setTotalFare(basePrice);
   }, [flight]);
 
-  // ✅ Update passenger field
+  //  Update passenger field
   const handlePassengerChange = (index, field, value) => {
     const updated = [...passengers];
     updated[index][field] = value;
     setPassengers(updated);
   };
 
-  // ✅ Add new passenger (up to 9)
+  //  Add new passenger (up to 9)
   const addPassenger = () => {
     if (passengers.length >= 9) {
       alert("Maximum 9 passengers allowed per booking.");
@@ -53,14 +53,14 @@ export default function BookFlight() {
     ]);
   };
 
-  // ✅ Remove passenger
+  //  Remove passenger
   const removePassenger = (index) => {
     if (passengers.length > 1) {
       setPassengers(passengers.filter((_, i) => i !== index));
     }
   };
 
-  // ✅ Confirm booking (POST to backend)
+  //  Confirm booking (POST to backend)
   const handleConfirmBooking = async () => {
     if (!user) {
       alert("Please log in to continue.");
@@ -115,7 +115,7 @@ export default function BookFlight() {
     }
   };
 
-  // ✅ Handle case when user refreshes page
+  //  Handle case when user refreshes page
   if (!flight) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
@@ -254,7 +254,7 @@ export default function BookFlight() {
           <UserPlus size={18} /> Add Another Passenger
         </button>
 
-        {/* ✅ Confirm Booking Button */}
+        {/*  Confirm Booking Button */}
         <div className="text-center mt-8">
           <button
             onClick={handleConfirmBooking}

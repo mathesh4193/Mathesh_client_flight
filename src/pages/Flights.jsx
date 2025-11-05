@@ -31,7 +31,7 @@ export default function Flights() {
 
   const navigate = useNavigate();
 
-  // ✅ Load origin/destination options
+  //  Load origin/destination options
   useEffect(() => {
     (async () => {
       try {
@@ -45,7 +45,7 @@ export default function Flights() {
     })();
   }, []);
 
-  // ✅ Calculate duration
+  //  Calculate duration
   const calculateDuration = (departure, arrival) => {
     const toMinutes = (time) => {
       if (!time) return 0;
@@ -62,7 +62,7 @@ export default function Flights() {
     return `${hrs}h ${mins}m`;
   };
 
-  // ✅ Calculate total price
+  //  Calculate total price
   const calculateTotal = (base, passengers, travelClass) => {
     const multiplier = { Economy: 1, Business: 1.8, "First Class": 2.5 };
     return Math.round(base * passengers * (multiplier[travelClass] || 1));
@@ -72,7 +72,7 @@ export default function Flights() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // ✅ Search flights
+  //  Search flights
   const handleSearch = async (e) => {
     e.preventDefault();
     const { origin, destination, date, passengers, travelClass } = formData;
@@ -232,7 +232,7 @@ export default function Flights() {
   );
 }
 
-/* ✅ Reusable Input and Select Components */
+/*  Reusable Input and Select Components */
 const InputField = ({ label, icon, ...props }) => (
   <div className="space-y-2">
     <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -271,7 +271,7 @@ const SelectField = ({ label, icon, name, value, options, onChange }) => (
   </div>
 );
 
-/* ✅ FlightCard Component */
+/*  FlightCard Component */
 const FlightCard = ({ flight, onBook }) => (
   <div className="bg-white shadow-xl rounded-2xl p-6 border hover:shadow-2xl transition-all">
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">

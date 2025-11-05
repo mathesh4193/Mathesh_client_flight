@@ -22,7 +22,7 @@ export default function PaymentSuccess() {
           const paymentStatus = data.booking.paymentStatus;
 
           if (paymentStatus === "Paid") {
-            setStatus("✅ Payment Successful!");
+            setStatus(" Payment Successful!");
             setVerified(true);
             break;
           }
@@ -32,12 +32,12 @@ export default function PaymentSuccess() {
           await new Promise((res) => setTimeout(res, 2000));
         }
 
-        // ✅ Redirect to booking details
+        //  Redirect to booking details
         setTimeout(() => {
           navigate(`/bookings/${bookingId}`);
         }, 1500);
       } catch (err) {
-        console.error("❌ Error verifying payment:", err);
+        console.error(" Error verifying payment:", err);
         setStatus("⚠️ Payment completed, but verification failed.");
         setTimeout(() => {
           navigate(`/bookings/${bookingId}`);
