@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
 import { useAuth } from "../contexts/AuthContext";
@@ -13,23 +13,23 @@ export default function BookingDetail() {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
 
-  //  Load booking details
-  const load = async () => {
+  // ✅ Load booking details
+  const load = useCallback(async () => {
     try {
       const { data } = await api.get(`/bookings/${id}`);
       setBooking(data.booking);
     } catch (err) {
-      console.error(" Error loading booking:", err);
+      console.error("❌ Error loading booking:", err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [api, id]);
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [load]);
 
-  //  Fetch flight status (mock API)
+  // ✅ Fetch flight status (mock API)
   useEffect(() => {
     if (booking?.flight?.flightNumber) {
       fetch(`${API_BASE_URL}/api/flight-status/${booking.flight.flightNumber}`)
@@ -39,7 +39,7 @@ export default function BookingDetail() {
     }
   }, [booking]);
 
-  //  PDF Download
+  // ✅ Download PDF
   const downloadPdf = async () => {
     try {
       setDownloading(true);
@@ -49,6 +49,7 @@ export default function BookingDetail() {
       });
 
       if (!res.ok) throw new Error("Failed to download itinerary");
+
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
 
@@ -59,26 +60,26 @@ export default function BookingDetail() {
       a.click();
       a.remove();
     } catch (err) {
-      console.error(" PDF download error:", err);
+      console.error("❌ PDF download error:", err);
       alert("Unable to download PDF. Please try again.");
     } finally {
       setDownloading(false);
     }
   };
 
-  //  Verify Payment
+  // ✅ Verify Payment
   const verifyPayment = async () => {
     try {
       const res = await api.get(`/payments/verify/${booking._id}`);
       alert(res.data.message);
       await load();
     } catch (err) {
-      console.error(" Payment verification failed:", err);
+      console.error("❌ Payment verification failed:", err);
       alert("Failed to verify payment. Please try again.");
     }
   };
 
-  //  Cancel Booking
+  // ✅ Cancel Booking
   const cancelBooking = async () => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
     try {
@@ -86,24 +87,24 @@ export default function BookingDetail() {
       await load();
       alert("Booking cancelled successfully.");
     } catch (err) {
-      console.error(" Cancel Booking Error:", err);
+      console.error("❌ Cancel Booking Error:", err);
       alert("Failed to cancel booking.");
     }
   };
 
-  //  Upgrade to Business
+  // ✅ Upgrade to Business Class
   const changeToBusiness = async () => {
     try {
       await api.post(`/bookings/${id}/change`, { travelClass: "Business" });
       await load();
       alert("Upgraded to Business class!");
     } catch (err) {
-      console.error(" Upgrade Error:", err);
+      console.error("❌ Upgrade Error:", err);
       alert("Failed to upgrade class.");
     }
   };
 
-  //  Loading / Not Found States
+  // ✅ Loading / Not Found States
   if (loading)
     return (
       <div className="min-h-screen flex flex-col">
@@ -126,7 +127,10 @@ export default function BookingDetail() {
       </div>
     );
 
-  //  Main Render
+  // ✅ Format Date/Time
+  const formatDateTime = (dt) => new Date(dt).toLocaleString();
+
+  // ✅ Main Render
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       <Navbar />
@@ -145,18 +149,22 @@ export default function BookingDetail() {
             <p>
               <b>Status:</b> {booking.status} / {booking.paymentStatus}
             </p>
-            <p>
-              <b>Flight:</b> {booking.flight.airline} ({booking.flight.flightNumber})
-            </p>
-            <p>
-              <b>Route:</b> {booking.flight.origin} → {booking.flight.destination}
-            </p>
-            <p>
-              <b>Departure:</b> {booking.flight.departureTime}
-            </p>
-            <p>
-              <b>Arrival:</b> {booking.flight.arrivalTime}
-            </p>
+            {booking.flight && (
+              <>
+                <p>
+                  <b>Flight:</b> {booking.flight.airline} ({booking.flight.flightNumber})
+                </p>
+                <p>
+                  <b>Route:</b> {booking.flight.origin} → {booking.flight.destination}
+                </p>
+                <p>
+                  <b>Departure:</b> {formatDateTime(booking.flight.departureTime)}
+                </p>
+                <p>
+                  <b>Arrival:</b> {formatDateTime(booking.flight.arrivalTime)}
+                </p>
+              </>
+            )}
             <p>
               <b>Class:</b> {booking.travelClass}
             </p>
@@ -169,7 +177,8 @@ export default function BookingDetail() {
 
             {status && (
               <p className="text-sm text-gray-500">
-                ✈️ Flight Status: <span className="font-medium">{status.statusText}</span>
+                ✈️ Flight Status:{" "}
+                <span className="font-medium">{status.statusText}</span>
               </p>
             )}
           </div>
@@ -187,12 +196,28 @@ export default function BookingDetail() {
                   key={i}
                   className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm"
                 >
-                  <p><b>Passenger {i + 1}:</b> {p.name}</p>
-                  <p><b>Gender:</b> {p.gender}</p>
-                  <p><b>Age:</b> {p.age}</p>
-                  <p><b>Seat:</b> {p.seat}</p>
-                  {p.email && <p><b>Email:</b> {p.email}</p>}
-                  {p.phone && <p><b>Phone:</b> {p.phone}</p>}
+                  <p>
+                    <b>Passenger {i + 1}:</b> {p.name}
+                  </p>
+                  <p>
+                    <b>Gender:</b> {p.gender}
+                  </p>
+                  <p>
+                    <b>Age:</b> {p.age}
+                  </p>
+                  <p>
+                    <b>Seat:</b> {p.seat}
+                  </p>
+                  {p.email && (
+                    <p>
+                      <b>Email:</b> {p.email}
+                    </p>
+                  )}
+                  {p.phone && (
+                    <p>
+                      <b>Phone:</b> {p.phone}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

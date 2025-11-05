@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useAuth } from "../contexts/AuthContext";
-import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
 import {
   Plane,
@@ -13,14 +12,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-//  Initialize Stripe safely
-const STRIPE_KEY = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
-let stripePromise = null;
-if (STRIPE_KEY && STRIPE_KEY.startsWith("pk_")) {
-  stripePromise = loadStripe(STRIPE_KEY);
-} else {
-  console.warn("⚠️ Stripe key missing or invalid in .env file");
-}
+// Note: Stripe is handled server-side via redirect URLs, so no client-side stripe-js initialization is needed here.
 
 export default function Bookings() {
   const { api } = useAuth();
