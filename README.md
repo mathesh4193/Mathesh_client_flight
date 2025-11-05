@@ -1,14 +1,27 @@
-# Mathesh Flight Booking Client
+# Mathesh Flight Booking System (MERN Stack)
 
-A modern, responsive React + Tailwind web client for the **Mathesh Flight Reservation Platform**.  It allows end-users to search flights, make bookings, manage profiles, and view detailed reports & analytics of their travel history.
+This project is a **complete flight booking web application** built using the **MERN stack** (MongoDB, Express, React, Node.js).  
+It allows users to search flights, make multi-passenger bookings, pay securely using Stripe, and download stylish **PDF e-tickets** with QR codes.
+
+---
+
+##  Overview
+
+This system is designed to simulate a real-world airline booking platform.  
+It supports multiple passengers per booking, auto seat assignment, and integrates email, SMS, and payment functionality.
+
+---
 
 ##  Features
 
--  **Flight Search & Booking** – Search flights by origin, destination, date, seat class, and book them instantly.
-- **Manage Bookings** – View, modify, or cancel existing reservations.
-- **User Profiles** – Update personal details, preferences, & view past trips.
-- **Reports & Analytics** – Interactive charts (Recharts) showing monthly trends, popular routes, class distribution, and revenue.
-- **Support & Contact** – Dedicated support pages and contact forms.
-- **Authentication** – JWT-based login & protected routes (via custom `AuthContext`).
+- Search available flights  
+- Book flights with multiple passengers  
+- Auto-generate seat numbers (A1, A2, B1, etc.)  
+- Choose travel class (Economy / Business / First Class)  
+- Secure online payment via Stripe  
+- Receive booking confirmation by email  
+- Cancel or modify bookings  
+- Download e-ticket as a **PDF** (with QR Code)  
+- View all bookings with flight details  
 
----
+
